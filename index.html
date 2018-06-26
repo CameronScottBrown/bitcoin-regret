@@ -6,38 +6,24 @@
     
         <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="style.css" rel="stylesheet">
-
-    
 </head>
 <body>
-    <div class="container">
-      <header class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills float-right">
-            <li class="nav-item">
-              <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="about.html">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact</a>
-            </li>
-          </ul>
-        </nav>
-        <h3 class="text-muted">Bitcoin Regret</h3>
+    <div class="container-fluid">
+       
+     <img id="btc-regret-logo" src="logo.png" alt="bitcoin regret logo">
+     
+     
+      <header class="header">
+       <h1 class="btc-header">Regret Calculator</h1>
       </header>
 
-      <main role="main">
-
-        <div class="jumbotron">
-          <h1 class="display-3">Bitcoin Regret</h1>
+        <div id="calc-section" class="jumbotron">
+          <h2>Any regrets?</h2>
           <div class="form-group">
               <form id="myForm">
-                  <p>If you had invested $  <input id="dollarAmount" type="number"></p>
-                    <p>into bitcoin during the week of <span class="variable" id="buyDate"></span>
+                  <p class="lead">If you had invested $  <input id="dollarAmount" type="number" placeholder="enter value (ex. 50)"></p>
+                    <p class="lead">into bitcoin during the week of <span class="variable" id="buyDate"></span>
                     </p>
               </form>
               
@@ -45,41 +31,69 @@
               <!-- SLIDER :: uses UNIX timestamps, intervals in weeks -->
               
               <div id="js-example-change-value">
-                   <input id="dateSlider" 
-                           type="range"
+                   <input   id="dateSlider" 
+                            type="range"
                             min="1328400000" 
                             max="1513468800" 
                             value="1328140800" 
                             step="604800"
-                            data-rangeslider> 
+                            data-rangeslider
+                            label="Date Slider"> 
+                    <p class="lead">&#8592; Date Slider &#8594;</p>
                     
-                    </div><hr>
-                <p>
-                    you could've had <span class="variable" id="coinCount"></span> coins, which would've been worth
+                </div>
+                <hr>
+                <p class="lead">
+                    you could've had <span class="variable" id="coinCount"></span> BTC, which would've been worth
                 </p>
 
                <h2 id="results">$<span class="variable" id="finalValue"></span></h2>
-                <p>at Bitcoin's peak in December 2017</p>
-                <div class="sadFace"><img src="sad-face.png"></div>
+                <p class="lead">at Bitcoin's peak in December 2017</p>
+                <div id="face-div">
+                    <img id="face" src="">
+                    <p id="face-msg"></p>
+                </div>
+                <br>
+                <div class="about-div">
+                    <button id="what-btn" class="btn btn-md">What is this?</button>
+                </div>
                 
-                
-                
+   
           </div>
-         
-          <!--
-            <p><a class="btn btn-lg btn-success" href="#" role="button">Check Now</a></p>
-            -->
+          
+        <div id="about-section" class="jumbotron">
+          <h2 class="display-4">What is this?</h2>
+          <p>
+              This was a small project that was implemented for fun in December 2017, when Bitcoin reached its peak price.
+          </p>  
+          <p>
+              All Bitcoin prices were gathered from a publicly available history table on <a href="https://www.investing.com/currencies/btc-usd-historical-data">Investing.com</a>. 
+              The BTC count is rounded to 2 decimal places for formatting purposes.
+          </p>
+          <p>
+              For maximum potential regret, this site uses the high price point from each week since February 2012. Before 2012, Bitcoin's price wasn't tracked by sites like Investing.com. However, just remember that Bitcoin was worth basically NOTHING in 2009. 
+          </p>
+          <p>
+              Have a nice day!
+          </p>
+          <p>
+              Sincerely, Cam
+          </p>
+          <p>
+              <a href="http://linkedin.com/in/CameronScottBrown">
+                  <button class="btn btn-md btn-primary">LinkedIn </button></a>
+              <a href="http://github.com/CameronScottBrown">
+                  <button class="btn btn-md btn-success">GitHub </button></a>
+              <a href="mailto:cameronscottbrown@gmail.com?Subject=Bitcoin%20Regret">
+                  <button class="btn btn-md btn-danger">Email </button></a>
+          </p>
         </div>
-
-      </main>
-
-      <footer class="footer">
-        <p>&copy; Bitcoin Regret</p>
-      </footer>
+        
+        </div>
 
     </div> <!-- /container -->
     
-    <script src="janky-prices.js"></script>
+    <script src="prices.js"></script>
     <script src="functions.js"></script>
 
 

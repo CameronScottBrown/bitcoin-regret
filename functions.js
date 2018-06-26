@@ -1,6 +1,3 @@
-
-        
-        
 //set event listeners on inputs
 
 /* I'm having all values get set on the dollarAmount entry in order to show the user 
@@ -11,6 +8,7 @@ document.getElementById('dollarAmount').addEventListener('input', function() {
     getHistoricalPrice(document.getElementById('dateSlider').value);
 
 });
+
 document.getElementById('dateSlider').addEventListener('input', setBuyDate);
 
 //load the page
@@ -18,47 +16,48 @@ document.addEventListener('load', loadPage());
 
 
 function loadPage() {
-
-
     loadJSON();
     setBuyDate();
-
-
 }
 
+//global element definitions
+var whatButton = document.getElementById('what-btn');
+var aboutSection = document.getElementById('about-section');
 
 
 function setCurrentPrice(numCoins) {
-
-
-
-    var coinPrice = 14445.84;
-
+    
+    var coinPrice = 19891.00; //price Dec 16, 2017 (investing.com)
     var currentValue = coinPrice * numCoins;
-
 
     pageDisplay('finalValue', currentValue.toFixed(2));
 
-
+    var startingDollars = document.getElementById('dollarAmount').value; //re-defined for scope
+    
+    if(startingDollars > currentValue){ //happy face! you dodged a bullet
+        document.getElementById('face').src = 'happy-face.png';
+        document.getElementById('face-msg').textContent = 'No regrets! You saved money!';
+        document.getElementById('face-div').style.display = 'block';
+    } else if (currentValue > startingDollars) {
+        // missed opportunity, you should be sad
+        document.getElementById('face').src = 'sad-face.png';
+        document.getElementById('face-msg').textContent = 'Yikes. Hindsight is 20/20.';
+        document.getElementById('face-div').style.display = 'block';
+    }
+    
 }
-
-
-
-
 
 
 //takes UNIX interval from the dateSlider and converts it to a dateString
 //  also, calls priceCheck function using the date
 function setBuyDate() {
 
-    let sliderInput = document.getElementById('dateSlider').value;
+    var sliderInput = document.getElementById('dateSlider').value;
 
     //check price and calls setCoins()
     getHistoricalPrice(sliderInput);
 
-    let buyDate = new Date(sliderInput * 1000); //converts the UNIX slider date to a DATE object
-
-
+    var buyDate = new Date(sliderInput * 1000); //converts the UNIX slider date to a DATE object
 
     //display the date                        
     pageDisplay('buyDate', printWeekOf(buyDate));
@@ -90,44 +89,30 @@ function getHistoricalPrice(unixDate){
 
 function setCoins(highPrice) {
 
-    let startingDollars = document.getElementById('dollarAmount').value;
+    var startingDollars = document.getElementById('dollarAmount').value;
 
-    let numCoins = startingDollars / highPrice;
-
+    var numCoins = (startingDollars / highPrice).toFixed(2);
 
     pageDisplay('coinCount', numCoins);
 
     //temporary call
     setCurrentPrice(numCoins);
+    
+    
+    
 
 }
 
+// pageDisplay -- changes the inner HTML of an element with named ID
 
 function pageDisplay(id, content){
     document.getElementById(id).innerHTML = content;
 }
 
-/* checkInputsFull - returns true if all inputs have values
-//      used to trigger the final display of dollars
-function checkInputsFull(){
-
-    let dollarInput = document.getElementById('dollarAmount').value;
-    let buyDate = document.getElementById('buyDate').value;
-    let sellDate = document.getElementById('sellDate').value;
-
-    if (dollarInput && buyDate && sellDate){
-        return true; //the inputs all have values
-    }
-    else return false;
-
-}
-*/
 
 // displayResults -- takes final dollar amount and displays it
 
 function displayResults(finalAmount) {
-
-
     document.getElementById('finalValue').innerHTML = finalAmount;
 }
 
@@ -135,9 +120,9 @@ function displayResults(finalAmount) {
 // printWeekOf - convert unix stamp results  to formatted date
 
 function printWeekOf(buyDate){
-    let month = buyDate.getMonth() + 1; //get-date methods use array indexing (jan is 0)
-    let day = buyDate.getDate() + 1;
-    let year = buyDate.getFullYear();
+    var month = buyDate.getMonth() + 1; //get-date methods use array indexing (jan is 0)
+    var day = buyDate.getDate() + 1;
+    var year = buyDate.getFullYear();
 
     // print correct Month to correspond with Unix date
     switch(month) {
@@ -173,10 +158,25 @@ function printWeekOf(buyDate){
             break;
         case 11:
             month = 'Nov';
+            break;
         default:
             month = 'Dec';
     }         
 
     return (month + ' ' + day + ', ' + year);        
 
+}
+
+
+// event listener to alternate calc and about sections
+document.getElementById('what-btn').onclick = function(){
+    
+    if(aboutSection.style.display != 'block'){
+        aboutSection.style.display = 'block';
+        whatButton.textContent = 'Close Section';
+        
+    } else {
+        aboutSection.style.display = 'none';
+        whatButton.textContent = 'What is this?';
+    }
 }
